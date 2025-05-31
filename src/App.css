@@ -1,25 +1,17 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+
+
+.linhaCodigo {
+    display: block;
+    width: 1280px;
+    height: 100px;
+    background-color: rgb(34, 34, 34);
+    border: 3px solid rgb(255, 255, 255); 
 }
 
-.reorder-group {
-  display: flex;
-  gap: 8px;
-  list-style: none;
+.caixaNalinha{
+      display: flex;
 }
 
-.caixa {
-  display: flex;
-  width: 200px; /* Largura da caixa */
-  height: 100px; /* Altura da caixa */
-  background-color: rgb(14, 134, 173); /* Cor de fundo da caixa */
-  border: 3px solid rgb(255, 255, 255); /* Borda da caixa */
-  justify-content: center; /* Alinha horizontalmente */
-  align-items: center;
-  font-size: x-large;
-  cursor: grab;
-}
+
 
 
