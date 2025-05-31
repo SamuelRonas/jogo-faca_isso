@@ -1,5 +1,5 @@
 // App.tsx
-import { useState } from 'react';
+import { act, useState } from 'react';
 import './App.css';
 import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Caixa } from './components/caixa/caixa';
@@ -60,6 +60,7 @@ function App() {
 
   function onDragEnd(event: any) {
     const { active, over } = event;
+    console.log(active.id + "        " + over.id)
     if (over && over.id === 'linhaCodigo') {
       const caixaArrastada = caixasDisponiveis.find((caixa) => caixa.id === active.id);
       if (caixaArrastada) {
@@ -67,23 +68,41 @@ function App() {
         setCaixasDisponiveis((prev) => prev.filter((c) => c.id !== active.id));
       }
     }
+    if (over && over.id === 'areaDisponivel') {
+      const caixaArrastada = caixasNaLinha.find((caixa) => caixa.id === active.id);
+      if (caixaArrastada) {
+        setCaixasNaLinha((prev) => prev.filter((c) => c.id !== active.id));
+        setCaixasDisponiveis((prev) => [...prev, caixaArrastada])
+      }
+    }
+
   }
 
   return (
     <>
+      <div className='view'></div>
       <h2 className='nome'>Faça Isso</h2>
       <DndContext onDragEnd={onDragEnd}>
         <LinhaCodigo caixasNaLinha={caixasNaLinha} />
-        <div className="areaDisponivel">
-          <div className='gridInterno'>
-            {caixasDisponiveis.map((caixa) => (
-              <CaixaDraggable key={caixa.id} caixa={caixa} />
-            ))}
-          </div>
-        </div>
+        <AreaDisponivel caixasDisponiveis={caixasDisponiveis} />
       </DndContext>
     </>
   );
+}
+
+function AreaDisponivel({ caixasDisponiveis }: { caixasDisponiveis: CaixaType[]; }) {
+  const { setNodeRef } = useDroppable({ id: 'areaDisponivel' });
+
+  return (
+    <div ref={setNodeRef} className="areaDisponivel">
+      <div className='gridInterno'>
+        {caixasDisponiveis.map((caixa) => (
+          <Caixa key={caixa.id} caixa={caixa} />
+        ))}
+      </div>
+    </div>
+  )
+
 }
 
 function LinhaCodigo({ caixasNaLinha }: { caixasNaLinha: CaixaType[]; }) {
@@ -100,31 +119,6 @@ function LinhaCodigo({ caixasNaLinha }: { caixasNaLinha: CaixaType[]; }) {
   );
 }
 
-function CaixaDraggable({ caixa }: { caixa: CaixaType }) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: caixa.id,
-  });
 
-  const style = {
-    transform: transform
-      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
-      : undefined,
-    zIndex: 999,
-  };
-
-  return (
-    <motion.div
-      ref={setNodeRef}
-      style={style}
-      {...listeners}
-      {...attributes}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      className="caixaDraggable"
-    >
-      <Caixa caixa={caixa} />
-    </motion.div>
-  );
-}
 
 export default App;
