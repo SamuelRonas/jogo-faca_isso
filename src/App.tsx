@@ -1,25 +1,61 @@
 // App.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Caixa } from './components/caixa/caixa';
-import { motion, AnimatePresence, Reorder } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface CaixaType {
   id: string;
   palavra: string;
 }
 
-function constroiCaixas(): CaixaType[] {
+function constroiCaixasPadrao(): CaixaType[] {
   return [
     { id: '1', palavra: 'Abrir' },
-    { id: '2', palavra: 'Fechar' },
+    { id: '2', palavra: 'lrbhfweufhefhweuiofhe' },
     { id: '3', palavra: 'Mover' },
+    { id: '4', palavra: 'Movrttrter' },
+    { id: '5', palavra: 'Mover' },
+    { id: '6', palavra: 'Mover' },
+    { id: '7', palavra: 'yhytjhyytjyjy' },
+    { id: '8', palavra: 'Moukukver' },
+    { id: '9', palavra: 'Movetgeeer' },
+    { id: '10', palavra: 'Mover' },
+    { id: '11', palavra: 'Movyjyjyter' },
+    { id: '12', palavra: 'Moveyjhtyjtjtyjr' },
+    { id: '13', palavra: 'Movyjtyjtyjtjtyjyer' },
+    { id: '14', palavra: 'Movyjtyjyjtyjer' },
+    { id: '15', palavra: 'Movrhjyjyjyttyjter' },
+    { id: '16', palavra: 'Morthtuver' },
+    { id: '17', palavra: 'Mover' },
+    { id: '18', palavra: 'Movyjtyjer' },
+    { id: '19', palavra: 'Abrir' },
+    { id: '20', palavra: 'lrbhfweufhefhweuiofhe' },
+    { id: '21', palavra: 'Movrgergrreger' },
+    { id: '22', palavra: 'Morstghtghrhsver' },
+    { id: '23', palavra: 'Moverthstttttttttr' },
+    { id: '24', palavra: 'Myh5hhover' },
+    { id: '25', palavra: 'Mogyetnertgertnergmkrver' },
+    { id: '26', palavra: 'Movgreg regergrgergergeger' },
+    { id: '27', palavra: 'uifohsuofhishfsd' },
+    { id: '28', palavra: 'aeevvveeveve' },
+    { id: '29', palavra: 'aevvvvv' },
+    { id: '30', palavra: 'aveeeee' },
+    { id: '31', palavra: 'aevvvvvvvv' },
+    { id: '32', palavra: 'aveeeeeeeeeeveve' },
+    { id: '33', palavra: 'ajjjjyttttttttttttttttttttttttttj' },
+    { id: '34', palavra: 'agrggrghhhdgh' },
+    { id: '35', palavra: 'ahghghghgh' },
+    { id: '36', palavra: 'ayjjjjjjjjjjjjjjjjjjjjjjjjjjjjj' },
+    { id: '38', palavra: 'ghgfhfghfghfghghfgha' },
+    { id: '39', palavra: 'aghfghfghgfhgg' },
+    { id: '40', palavra: 'aghfghfhfghfg' },
   ];
 }
 
 function App() {
-  const [caixasDisponiveis, setCaixasDisponiveis] = useState<CaixaType[]>(constroiCaixas());
+  const [caixasDisponiveis, setCaixasDisponiveis] = useState<CaixaType[]>(constroiCaixasPadrao());
   const [caixasNaLinha, setCaixasNaLinha] = useState<CaixaType[]>([]);
 
   function onDragEnd(event: any) {
@@ -34,57 +70,32 @@ function App() {
   }
 
   return (
-    <DndContext onDragEnd={onDragEnd}>
-      <div className="container">
+    <>
+      <h2 className='nome'>Faça Isso</h2>
+      <DndContext onDragEnd={onDragEnd}>
+        <LinhaCodigo caixasNaLinha={caixasNaLinha} />
         <div className="areaDisponivel">
-          <h2>Caixas Disponíveis</h2>
-          {caixasDisponiveis.map((caixa) => (
-            <CaixaDraggable key={caixa.id} caixa={caixa} />
-          ))}
+          <div className='gridInterno'>
+            {caixasDisponiveis.map((caixa) => (
+              <CaixaDraggable key={caixa.id} caixa={caixa} />
+            ))}
+          </div>
         </div>
-
-        <LinhaCodigo caixasNaLinha={caixasNaLinha} setCaixasNaLinha={setCaixasNaLinha} />
-      </div>
-    </DndContext>
+      </DndContext>
+    </>
   );
 }
 
-function LinhaCodigo({
-  caixasNaLinha,
-  setCaixasNaLinha,
-}: {
-  caixasNaLinha: CaixaType[];
-  setCaixasNaLinha: React.Dispatch<React.SetStateAction<CaixaType[]>>;
-}) {
-  const { setNodeRef } = useDroppable({
-    id: 'linhaCodigo',
-  });
+function LinhaCodigo({ caixasNaLinha }: { caixasNaLinha: CaixaType[]; }) {
+  const { setNodeRef } = useDroppable({ id: 'linhaCodigo' });
 
   return (
-    <div ref={setNodeRef} className="linhaCodigo">
-      <h2>Linha de Código</h2>
-      <Reorder.Group
-        axis="x"
-        values={caixasNaLinha}
-        onReorder={setCaixasNaLinha}
-        className="reorder-group"
-      >
-        <AnimatePresence>
-          {caixasNaLinha.map((caixa) => (
-            <Reorder.Item
-              key={caixa.id}
-              value={caixa}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.3 }}
-              className="caixaNaLinha"
-            >
-              <Caixa caixa={caixa} />
-            </Reorder.Item>
-          ))}
-        </AnimatePresence>
-      </Reorder.Group>
+    <div ref={setNodeRef} className="container">
+      <div className='gridInterno'>
+        {caixasNaLinha.map((caixa) => (
+          <Caixa key={caixa.id} caixa={caixa} />
+        ))}
+      </div>
     </div>
   );
 }
