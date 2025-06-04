@@ -17,6 +17,23 @@ body {
     -ms-overflow-style: none;
 }
 
+.iniciar {
+    background-color: #12d300;
+    border-radius: 14px;
+    font-weight: bold;
+    font-size: 1rem;
+    margin: 5px;
+    justify-content: center;
+    align-items: center;
+    min-width: 70px;
+    padding: 0px 10px;
+    height: 56px;
+    color: #ffffff;
+    display: flex;
+    font-family: 'Inter', sans-serif;
+    border: none;
+}
+
 .container::-webkit-scrollbar {
     display: none;
 }
@@ -51,7 +68,8 @@ body {
 .areaDisponivel::-webkit-scrollbar {
     display: none;
 }
-.view{
+
+.view {
     border-left: 6px solid #0C0B3F;
     display: flex;
     position: fixed;
@@ -71,4 +89,8 @@ body {
     z-index: 20;
     text-align: center;
     font-family: 'Inter';
+}
+
+.reorder-item {
+    list-style: none;
 }

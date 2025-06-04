@@ -6,13 +6,16 @@
   margin: 5px;       
   justify-content: center;
   align-items: center;   
-  width:auto;
   min-width: 70px; 
   padding: 0px 10px;
   height: 56px;
   color: #191852;             
   display: flex;  
-  font-family: 'Inter',sans-serif; 
-  padding: auto;
+  font-family: 'Inter', sans-serif; 
   cursor: grab;
+   list-style: none;
+  user-select: none;
 }
+
+
+

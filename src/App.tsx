@@ -1,7 +1,7 @@
 // App.tsx
 
 
-import { InterfaceUsuario } from './components/interfaceUsuario/interfaceUsuario';
+import { InterfaceUsuario } from './components/InterfaceUsuario/interfaceUsuario';
 
 
 
